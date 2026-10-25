@@ -85,6 +85,11 @@
 		<EmbeddedResource Remove="backend\**\*" />
 		<MauiXaml Remove="backend\**\*.xaml" />
 		<None Remove="backend\**\*" />
+		<!-- Generated submission snapshots and scratch files are not app sources. -->
+		<Compile Remove="output\**\*.cs;tmp\**\*.cs" />
+		<EmbeddedResource Remove="output\**\*;tmp\**\*" />
+		<MauiXaml Remove="output\**\*.xaml;tmp\**\*.xaml" />
+		<None Remove="output\**\*;tmp\**\*" />
 	</ItemGroup>
 
 	<!-- ✅ NuGet dependencies -->
