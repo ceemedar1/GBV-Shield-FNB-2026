@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GBV_Shield.Features.Resources.ResourcesPage"
+             Title="Resources">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="📚 Support &amp; Resources"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <!-- LEGAL AID -->
+            <Frame Padding="15" BorderColor="LightGray" CornerRadius="12">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="⚖️ Legal Aid South Africa"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                    <Label Text="Free legal services for those who cannot afford representation."
+                           FontSize="14"
+                           TextColor="Gray" />
+
+                    <Button Text="🌍 Visit Website"
+                            Clicked="OnLegalAidWebsiteClicked" />
+                    <Button Text="📞 Call Legal Aid (0800 110 110)"
+                            Clicked="OnLegalAidCallClicked" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- GBV HELPLINE -->
+            <Frame Padding="15" BorderColor="LightGray" CornerRadius="12">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="🧑‍⚕️ GBV Command Centre"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                    <Label Text="24/7 counselling and support for victims of gender-based violence."
+                           FontSize="14"
+                           TextColor="Gray" />
+
+                    <Button Text="📞 Call GBV Helpline (0800 428 428)"
+                            Clicked="OnGBVHelplineCallClicked" />
+                    <Button Text="💬 WhatsApp Support"
+                            Clicked="OnGBVWhatsAppClicked" />
+                    <Button Text="📱 Dial USSD (*120*7867#)"
+                            Clicked="OnGBVUssdClicked" />
+                    <Button Text="🌍 Visit Website"
+                            Clicked="OnGBVWebsiteClicked" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- NATIONAL EMERGENCY -->
+            <Frame Padding="15" BorderColor="LightGray" CornerRadius="12">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="🚨 National Emergency Hotline"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                    <Label Text="For police, ambulance, or fire emergencies."
+                           FontSize="14"
+                           TextColor="Gray" />
+
+                    <Button Text="📞 Call 112"
+                            Clicked="OnEmergencyCallClicked" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

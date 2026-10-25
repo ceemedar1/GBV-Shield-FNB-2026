@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GBV_Shield.Features.ChatHotline.ChatPage"
+             Title="AI Support"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#FAF7FF">
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+        <Grid Padding="16,12" ColumnDefinitions="Auto,*,Auto" BackgroundColor="#3B0764">
+            <Button Text="Back" Clicked="BackClicked" BackgroundColor="Transparent" TextColor="White" />
+            <Label Grid.Column="1" Text="GBV Shield AI Support" TextColor="White"
+                   FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+            <Button Grid.Column="2" Text="Clear" Clicked="ClearClicked" BackgroundColor="Transparent" TextColor="White" />
+        </Grid>
+        <VerticalStackLayout Grid.Row="1" Padding="16" Spacing="8">
+            <Label Text="AI guidance, not a human counsellor or emergency service. Do not share names, ID numbers, exact addresses or graphic details. Messages go to Google's Gemini service; this app does not save a chat transcript."
+                   TextColor="#4B4160" FontSize="12" />
+            <CheckBox x:Name="ConsentCheckBox" Color="#6D28D9" CheckedChanged="ConsentChanged" />
+            <Label Text="I understand and agree to use AI chat" TextColor="#25143C" FontSize="12" />
+        </VerticalStackLayout>
+        <ScrollView x:Name="MessagesScroll" Grid.Row="2" Padding="16,4">
+            <VerticalStackLayout x:Name="Messages" Spacing="10" />
+        </ScrollView>
+        <Label x:Name="LoadStatus" Grid.Row="3" Padding="16,4" FontSize="12" TextColor="#6F6280"
+               Text="Ready when you are. Share only what feels safe." />
+        <Grid Grid.Row="4" Padding="12" ColumnDefinitions="*,Auto" BackgroundColor="White">
+            <Entry x:Name="MessageEntry" Placeholder="Message AI support…" MaxLength="2000" TextChanged="MessageChanged"
+                   BackgroundColor="#FAF7FF" TextColor="#25143C" />
+            <Button x:Name="SendButton" Grid.Column="1" Text="Send" Clicked="SendClicked" IsEnabled="False"
+                    BackgroundColor="#6D28D9" TextColor="White" CornerRadius="18" />
+        </Grid>
+    </Grid>
+</ContentPage>

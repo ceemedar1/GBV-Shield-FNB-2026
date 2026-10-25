@@ -1,0 +1,47 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "conversations": {
+      "$conversationId": {
+        ".read": "auth != null && (auth.uid === $conversationId || auth.token.support === true)",
+        "messages": {
+          "$messageId": {
+            ".write": "auth != null && !data.exists() && (auth.token.support === true || (auth.uid === $conversationId && newData.child('senderId').val() === auth.uid))",
+            ".validate": "newData.hasChildren(['senderId', 'text', 'timestampMs']) && newData.child('senderId').isString() && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 4000 && newData.child('timestampMs').isNumber()"
+          }
+        }
+      }
+    },
+    "stories": {
+      ".read": "auth != null",
+      ".indexOn": ["createdAtMs"],
+      "$storyId": {
+        ".write": "auth != null && ((!data.exists() && newData.exists()) || (data.exists() && !newData.exists() && root.child('userStories').child(auth.uid).child($storyId).val() === true))",
+        ".validate": "!newData.exists() || (newData.hasOnly(['author','content','createdAtMs']) && newData.child('author').val() === 'Anonymous' && newData.child('content').isString() && newData.child('content').val().length >= 20 && newData.child('content').val().length <= 2000 && newData.child('createdAtMs').isNumber() && newData.child('createdAtMs').val() <= now + 60000)"
+      }
+    },
+    "userStories": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$storyId": {
+            ".write": "auth != null && auth.uid === $uid && ((!data.exists() && newData.val() === true && !root.child('stories').child($storyId).exists()) || (data.val() === true && !newData.exists()))",
+          ".validate": "!newData.exists() || newData.val() === true"
+        }
+      }
+    },
+    "liveLocations": {
+      "$sessionToken": {
+        ".read": "(auth != null && data.child('ownerUid').val() === auth.uid) || (data.child('active').val() === true && data.child('expiresAt').val() > now)",
+        ".write": "auth != null && ((!data.exists() && newData.child('ownerUid').val() === auth.uid) || data.child('ownerUid').val() === auth.uid)",
+        ".validate": "$sessionToken.matches(/^[A-Za-z0-9_-]{43}$/) && newData.hasChildren(['ownerUid','active','createdAt','expiresAt','updatedAt','hasLocation','latitude','longitude']) && newData.child('ownerUid').isString() && newData.child('active').isBoolean() && newData.child('createdAt').isNumber() && newData.child('expiresAt').isNumber() && newData.child('expiresAt').val() <= now + 28800000 && newData.child('updatedAt').isNumber() && newData.child('hasLocation').isBoolean() && newData.child('latitude').isNumber() && newData.child('latitude').val() >= -90 && newData.child('latitude').val() <= 90 && newData.child('longitude').isNumber() && newData.child('longitude').val() >= -180 && newData.child('longitude').val() <= 180"
+      }
+    }
+  }
+}

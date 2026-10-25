@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GBV_Shield.Features.Auth.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Login">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <Label Text="Welcome back"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Entry x:Name="EmailEntry"
+                   Placeholder="Email"
+                   Keyboard="Email" />
+
+            <Entry x:Name="PasswordEntry"
+                   Placeholder="Password"
+                   IsPassword="True" />
+
+            <Button Text="Sign In"
+                    Clicked="OnLoginClicked" />
+
+            <Button Text="Create an account"
+                    Style="{StaticResource SecondaryButton}"
+                    Clicked="OnGoToRegisterClicked" />
+
+            <ActivityIndicator x:Name="Busy"
+                               IsVisible="False"
+                               IsRunning="False"
+                               HorizontalOptions="Center" />
+
+            <!-- Divider -->
+            <BoxView HeightRequest="1" Opacity="0.25" />
+
+            <!-- ✅ Quick SOS (no login required) -->
+            <Label Text="Quick SOS (no login required)"
+                   FontAttributes="Bold"
+                   Opacity="0.9" />
+
+            <Button Text="📩 Send SOS Alert (with Location)"
+                    Style="{StaticResource SosButton}"
+                    Clicked="OnQuickSendSOSClicked" />
+
+            <Button Text="📞 Call Emergency Hotline"
+                    Style="{StaticResource HotlineButton}"
+                    Clicked="OnQuickCallHotlineClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

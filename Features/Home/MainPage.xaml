@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GBV_Shield.Features.Home.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#2575FC">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- App Title -->
+            <Label Text="Welcome to GBV Shield"
+                   FontSize="28"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="White"/>
+
+            <!-- Shelter -->
+            <Border Padding="0" StrokeThickness="0" StrokeShape="RoundRectangle 25" BackgroundColor="#6200EE">
+                <Grid>
+                    <HorizontalStackLayout Padding="15" Spacing="15">
+                        <Image Source="shelter.png" HeightRequest="28" WidthRequest="28"/>
+                        <Label Text="Shelter" FontSize="18" VerticalOptions="Center" TextColor="White"/>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTileTapped" CommandParameter="ShelterPage"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Report Incident -->
+            <Border Padding="0" StrokeThickness="0" StrokeShape="RoundRectangle 25" BackgroundColor="#388E3C">
+                <Grid>
+                    <HorizontalStackLayout Padding="15" Spacing="15">
+                        <Image Source="report.png" HeightRequest="28" WidthRequest="28"/>
+                        <Label Text="Report Incident" FontSize="18" VerticalOptions="Center" TextColor="White"/>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTileTapped" CommandParameter="ReportPage"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Chat -->
+            <Border Padding="0" StrokeThickness="0" StrokeShape="RoundRectangle 25" BackgroundColor="#6D28D9">
+                <Grid>
+                    <HorizontalStackLayout Padding="15" Spacing="15">
+                        <Image Source="chat.png" HeightRequest="28" WidthRequest="28"/>
+                        <Label Text="Chat Hotline" FontSize="18" VerticalOptions="Center" TextColor="White"/>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTileTapped" CommandParameter="//ChatPage"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- SOS -->
+            <Border Padding="0" StrokeThickness="0" StrokeShape="RoundRectangle 25" BackgroundColor="#D32F2F">
+                <Grid>
+                    <HorizontalStackLayout Padding="15" Spacing="15">
+                        <Image Source="sos.png" HeightRequest="28" WidthRequest="28"/>
+                        <Label Text="SOS" FontSize="18" VerticalOptions="Center" TextColor="White"/>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTileTapped" CommandParameter="//SOSPage"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Resources -->
+            <Border Padding="0" StrokeThickness="0" StrokeShape="RoundRectangle 25" BackgroundColor="#0288D1">
+                <Grid>
+                    <HorizontalStackLayout Padding="15" Spacing="15">
+                        <Image Source="resources.png" HeightRequest="28" WidthRequest="28"/>
+                        <Label Text="Resources" FontSize="18" VerticalOptions="Center" TextColor="White"/>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTileTapped" CommandParameter="//ResourcesPage"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Settings -->
+            <Border Padding="0" StrokeThickness="0" StrokeShape="RoundRectangle 25" BackgroundColor="#9C27B0">
+                <Grid>
+                    <HorizontalStackLayout Padding="15" Spacing="15">
+                        <Image Source="settings.png" HeightRequest="28" WidthRequest="28"/>
+                        <Label Text="Settings" FontSize="18" VerticalOptions="Center" TextColor="White"/>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTileTapped" CommandParameter="//SettingsPage"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="GBV_Shield.Features.Shelters.ShelterPage" Title="Nearby Help">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Padding="15" RowSpacing="10">
+        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6">
+            <Button x:Name="HospitalsButton" Text="Hospitals" Clicked="OnHospitalClicked" BackgroundColor="#4CAF50" TextColor="White" CornerRadius="8"/>
+            <Button x:Name="PoliceButton" Grid.Column="1" Text="Police" Clicked="OnPoliceClicked" BackgroundColor="#E0E0E0" TextColor="#222222" CornerRadius="8"/>
+            <Button x:Name="NgoButton" Grid.Column="2" Text="NGO / NPO" Clicked="OnNgoClicked" BackgroundColor="#E0E0E0" TextColor="#222222" CornerRadius="8"/>
+        </Grid>
+        <Button x:Name="RefreshButton" Grid.Row="1" Text="Refresh" Clicked="OnRefreshClicked" BackgroundColor="#4CAF50" TextColor="White" CornerRadius="8" HeightRequest="45"/>
+        <Label x:Name="SearchSummary" Grid.Row="2" Text="Choose a category to find nearby help." TextColor="#51495F" FontSize="12"/>
+        <ActivityIndicator x:Name="LoadingIndicator" Grid.Row="3" IsRunning="False" IsVisible="False" HorizontalOptions="Center"/>
+        <CollectionView x:Name="ShelterList" Grid.Row="4" SelectionMode="None" ItemsLayout="VerticalList">
+            <CollectionView.EmptyView>
+                <Label x:Name="EmptyMessage" Text="Choose a category and tap Refresh." Padding="20" TextColor="#655F73" HorizontalTextAlignment="Center"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,6" Padding="12" Stroke="LightGray" StrokeShape="RoundRectangle 12" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="7">
+                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="Black" LineBreakMode="WordWrap"/>
+                            <Label Text="{Binding Type}" FontSize="12" TextColor="#455A64"/>
+                            <Label Text="{Binding Address}" TextColor="#1565C0" LineBreakMode="WordWrap"/>
+                            <Label Text="{Binding Phone}" IsVisible="{Binding HasPhone}" TextColor="#1565C0"/>
+                            <Label Text="{Binding DistanceKm, StringFormat='Approx. straight-line distance: {0} km'}" FontSize="12" TextColor="#51495F"/>
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="5">
+                                <Button Text="Directions" Command="{Binding OpenMapsCommand}" FontSize="12" Padding="4"/>
+                                <Button Grid.Column="1" Text="Call" Command="{Binding CallCommand}" IsVisible="{Binding HasPhone}" FontSize="12" Padding="4"/>
+                                <Button Grid.Column="2" Text="Website" Command="{Binding OpenWebsiteCommand}" IsVisible="{Binding HasWebsite}" FontSize="12" Padding="4"/>
+                            </Grid>
+                            <Label Text="{Binding SourceLabel}" FontSize="11" TextColor="#655F73" LineBreakMode="WordWrap"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

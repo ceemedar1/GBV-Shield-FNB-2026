@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="GBV_Shield.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+    xmlns:home="clr-namespace:GBV_Shield.Features.Home"
+    xmlns:chat="clr-namespace:GBV_Shield.Features.ChatHotline"
+    xmlns:sos="clr-namespace:GBV_Shield.Features.SOS"
+    xmlns:shelter="clr-namespace:GBV_Shield.Features.Shelters"
+    xmlns:resources="clr-namespace:GBV_Shield.Features.Resources"
+    xmlns:report="clr-namespace:GBV_Shield.Features.Reporting"
+    xmlns:settings="clr-namespace:GBV_Shield.Features.Settings"
+    xmlns:stories="clr-namespace:GBV_Shield.Features.Stories">
+
+    <TabBar>
+        <!-- ✅ Home -->
+        <ShellContent Title="Home" Route="MainPage"
+                      ContentTemplate="{DataTemplate home:MainPage}" />
+
+        <!-- ✅ SOS -->
+        <ShellContent Title="SOS" Route="SOSPage"
+                      ContentTemplate="{DataTemplate sos:SOSPage}" />
+
+        <!-- ✅ Chat -->
+        <ShellContent Title="Chat" Route="ChatPage"
+                      ContentTemplate="{DataTemplate chat:ChatPage}" />
+
+        <!-- ✅ Stories -->
+        <ShellContent Title="Stories" Route="StoriesPage"
+                      ContentTemplate="{DataTemplate stories:StoriesPage}" />
+
+        <!-- ✅ Resources -->
+        <ShellContent Title="Resources" Route="ResourcesPage"
+                      ContentTemplate="{DataTemplate resources:ResourcesPage}" />
+
+        <!-- ✅ Shelter -->
+        <ShellContent Title="Shelter" Route="ShelterPage"
+                      ContentTemplate="{DataTemplate shelter:ShelterPage}" />
+
+        <!-- ✅ Report -->
+        <ShellContent Title="Report" Route="ReportPage"
+                      ContentTemplate="{DataTemplate report:ReportPage}" />
+
+        <!-- ✅ Settings -->
+        <ShellContent Title="Settings" Route="SettingsPage"
+                      ContentTemplate="{DataTemplate settings:SettingsPage}" />
+    </TabBar>
+</Shell>

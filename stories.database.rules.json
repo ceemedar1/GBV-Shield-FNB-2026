@@ -1,0 +1,27 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "stories": {
+      ".read": "auth != null",
+      ".indexOn": ["createdAtMs"],
+      "$storyId": {
+        ".write": "auth != null && ((!data.exists() && newData.exists()) || (data.exists() && !newData.exists() && root.child('userStories').child(auth.uid).child($storyId).val() === true))",
+        ".validate": "newData.hasChildren(['author','content','createdAtMs'])",
+        "author": { ".validate": "newData.isString() && newData.val() === 'Anonymous'" },
+        "content": { ".validate": "newData.isString() && newData.val().length >= 20 && newData.val().length <= 2000" },
+        "createdAtMs": { ".validate": "newData.isNumber() && newData.val() > now - 300000 && newData.val() <= now + 60000" },
+        "$other": { ".validate": false }
+      }
+    },
+    "userStories": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$storyId": {
+          ".write": "auth != null && auth.uid === $uid && ((!data.exists() && newData.val() === true && !root.child('stories').child($storyId).exists()) || (data.val() === true && !newData.exists()))",
+          ".validate": "!newData.exists() || newData.val() === true"
+        }
+      }
+    }
+  }
+}

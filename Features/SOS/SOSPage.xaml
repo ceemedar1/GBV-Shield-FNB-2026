@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GBV_Shield.Features.SOS.SOSPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="SOS">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#AA0000" Offset="0.0" />
+            <GradientStop Color="#660000" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <VerticalStackLayout Padding="20" Spacing="16">
+
+        <Label Text="Emergency SOS"
+               FontSize="24"
+               HorizontalOptions="Center"
+               TextColor="White"
+               FontAttributes="Bold" />
+
+        <!-- Send SOS SMS with location -->
+        <Button Text="📩 Send SOS Alert (with Location)"
+                BackgroundColor="#CC0000"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="56"
+                FontAttributes="Bold"
+                Clicked="OnSendSOSClicked" />
+
+        <!-- Call emergency hotline -->
+        <Button Text="📞 Call Emergency Hotline"
+                BackgroundColor="#990000"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="56"
+                FontAttributes="Bold"
+                Clicked="OnCallHotlineClicked" />
+
+        <Label Text="Tip: Add trusted contacts &amp; hotline in Settings (defaults are used if not set)."
+               FontSize="12"
+               TextColor="#FFFFFFCC"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center" />
+
+    </VerticalStackLayout>
+</ContentPage>

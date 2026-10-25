@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:GBV_Shield.Converters;assembly=GBV_Shield"
+             x:Class="GBV_Shield.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- 🔄 Converters -->
+            <converters:MessageBubbleColorConverter x:Key="MessageBubbleColorConverter"/>
+            <converters:MessageBubbleAlignmentConverter x:Key="MessageBubbleAlignmentConverter"/>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+
+            <!-- 🎨 Colors -->
+            <Color x:Key="PrimaryColor">#512BD4</Color>
+            <Color x:Key="SecondaryColor">#2B0B98</Color>
+            <Color x:Key="DangerColor">#CC0000</Color>
+            <Color x:Key="HotlineColor">#8B0000</Color>
+            <Color x:Key="NeutralColor">#444444</Color>
+
+            <!-- 🌈 Gradient Background -->
+            <LinearGradientBrush x:Key="AppBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{StaticResource SecondaryColor}" Offset="0.0" />
+                <GradientStop Color="{StaticResource PrimaryColor}" Offset="1.0" />
+            </LinearGradientBrush>
+
+            <!-- 🔘 Global Button Styles -->
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="10,5" />
+                <Setter Property="HeightRequest" Value="44" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="SecondaryButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource NeutralColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="12" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="SosButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource DangerColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="12" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="HotlineButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource HotlineColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="12" />
+            </Style>
+
+            <!-- 📱 Page Background -->
+            <Style TargetType="ContentPage">
+                <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+            </Style>
+
+            <!-- (Optional) Google Places API Key for Shelter search -->
+            <!-- <x:String x:Key="GooglePlacesApiKey">YOUR_API_KEY_HERE</x:String> -->
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

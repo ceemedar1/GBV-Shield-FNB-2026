@@ -1,0 +1,5 @@
+<metadata>
+  <!-- Only the public provider factory is needed by the app. Internal SDK classes
+       are implementation details and do not have stable .NET bindings. -->
+  <remove-node path="/api/package[@name='com.google.firebase.appcheck.recaptcha.internal']" />
+</metadata>

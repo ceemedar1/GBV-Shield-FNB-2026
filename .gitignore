@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+*.user
+*.keystore
+*.jks
+*.p12
+*.pfx
+**/google-services.json
+**/GoogleService-Info.plist
+*.env
+secrets.json
+appsettings.*.local.json
+output/
+tmp/

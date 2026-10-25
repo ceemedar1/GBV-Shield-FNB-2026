@@ -1,0 +1,168 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>GBV_Shield</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<Nullable>enable</Nullable>
+
+		<!-- ✅ Versioning for app stores -->
+		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
+
+	</PropertyGroup>
+
+	<!-- Release signing values must be supplied by protected CI/build properties. -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0-android'">
+		<AndroidKeyStore>true</AndroidKeyStore>
+		<AndroidSigningKeyStore>$(GBVShieldSigningKeyStore)</AndroidSigningKeyStore>
+		<AndroidSigningKeyAlias>$(GBVShieldSigningKeyAlias)</AndroidSigningKeyAlias>
+		<AndroidSigningKeyPass>$(GBVShieldSigningKeyPass)</AndroidSigningKeyPass>
+		<AndroidSigningStorePass>$(GBVShieldSigningStorePass)</AndroidSigningStorePass>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
+		<SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
+		<ApplicationId>com.gbvshield.app</ApplicationId>
+	</PropertyGroup>
+
+	<!-- Huawei / AppGallery build: removes the Google-only FCM integration while
+	     preserving the shared Firebase REST backend, SOS, SMS, GPS and local alerts. -->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-android' and '$(HuaweiBuild)' == 'true'">
+		<!-- Google's reCAPTCHA Mobile SDK requires Android 7.0 (API 24). -->
+		<SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+		<!-- A separate intermediate path prevents Android manifest/linker cache reuse from the standard build. -->
+		<IntermediateOutputPath>obj\Huawei\$(Configuration)\$(TargetFramework)\</IntermediateOutputPath>
+		<ApplicationId>com.gbvshield.app.huawei</ApplicationId>
+		<ApplicationTitle>GBV Shield</ApplicationTitle>
+		<DefineConstants>$(DefineConstants);HUAWEI_BUILD</DefineConstants>
+	</PropertyGroup>
+
+	<!-- Produce a self-contained debug APK that can be installed without IDE fast deployment. -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug' and '$(TargetFramework)' == 'net10.0-android'">
+		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+		<AndroidStoreUncompressedFileExtensions>.so</AndroidStoreUncompressedFileExtensions>
+	</PropertyGroup>
+
+	<!-- ✅ Raw assets -->
+	<ItemGroup>
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<!-- ✅ App icon -->
+	<ItemGroup>
+		<None Remove="Platforms\Android\google-services.json" />
+		<None Remove="Resources\AppIcon\appicon.png" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" ForegroundFile="Resources\AppIcon\appicon.png" />
+	</ItemGroup>
+
+	<!-- ✅ Images -->
+	<ItemGroup>
+		<None Remove="Resources\Images\*.png" />
+		<MauiImage Include="Resources\Images\*.png" />
+	</ItemGroup>
+
+	<!-- ✅ Splash screen -->
+	<ItemGroup>
+		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#512BD4" BaseSize="128,128" />
+	</ItemGroup>
+
+	<!-- Firebase's Android configuration is only required by the Google FCM build. -->
+	<ItemGroup Condition="'$(HuaweiBuild)' != 'true'">
+		<GoogleServicesJson Include="Platforms\Android\google-services.json" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android' and '$(HuaweiBuild)' == 'true'">
+		<Compile Remove="Platforms\Android\Services\MyFirebaseMessagingService.cs" />
+		<ProjectReference Include="backend\FirebaseRecaptchaBinding\FirebaseRecaptchaBinding.csproj" />
+	</ItemGroup>
+
+	<!-- The Azure API is a separate deployable project under this repository. -->
+	<ItemGroup>
+		<Compile Remove="backend\**\*.cs" />
+		<EmbeddedResource Remove="backend\**\*" />
+		<MauiXaml Remove="backend\**\*.xaml" />
+		<None Remove="backend\**\*" />
+	</ItemGroup>
+
+	<!-- ✅ NuGet dependencies -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.100" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
+		<PackageReference Include="Plugin.LocalNotification" Version="14.1.1" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
+		<PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.5" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android' and '$(HuaweiBuild)' != 'true'">
+		<PackageReference Include="Xamarin.Firebase.Messaging" Version="125.1.1" />
+		<PackageReference Include="Xamarin.Firebase.AppCheck.PlayIntegrity" Version="119.4.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
+		<PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.13.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Collection.Ktx" Version="1.6.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.9.0" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.11.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.11.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Process" Version="2.11.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime.Ktx" Version="2.11.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime.Ktx.Android" Version="2.11.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.ViewModel.Ktx" Version="2.11.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.SavedState.SavedState.Ktx" Version="1.5.0.1" />
+	</ItemGroup>
+
+	<!-- ✅ Link code-behind to XAML -->
+	<ItemGroup>
+		<Compile Update="Features\Reporting\ReportPage.xaml.cs">
+			<DependentUpon>ReportPage.xaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiImage Update="Resources\Images\report.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </MauiImage>
+	</ItemGroup>
+
+	<!-- ✅ XAML pages -->
+	<ItemGroup>
+		<MauiXaml Update="App.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Auth\RegisterPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Common\SplashPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Home\MainPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Resources\ResourcesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Settings\SettingsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Shelters\ShelterPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Stories\StoriesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Stories\AddStoryPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\SOS\SOSPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Features\Reporting\ReportPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	</ItemGroup>
+
+</Project>

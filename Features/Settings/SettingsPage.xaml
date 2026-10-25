@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GBV_Shield.Features.Settings.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Settings">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="⚙️ Emergency Settings"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="Black" />
+
+            <!-- Hotline number -->
+            <Label Text="Emergency Hotline Number:"
+                   FontAttributes="Bold"
+                   TextColor="Gray" />
+            <Entry x:Name="HotlineEntry"
+                   Placeholder="Enter hotline number (e.g., 112)"
+                   Keyboard="Telephone" />
+
+            <!-- Trusted contacts -->
+            <Label Text="Trusted Contacts (comma separated, up to 10):"
+                   FontAttributes="Bold"
+                   TextColor="Gray" />
+            <Editor x:Name="ContactsEditor"
+                    Placeholder="+1234567890, +1987654321, +27600000000"
+                    AutoSize="TextChanges"
+                    HeightRequest="100" />
+
+            <!-- Save button -->
+            <Button Text="💾 Save Settings"
+                    Clicked="OnSaveClicked" />
+
+            <BoxView HeightRequest="1"
+                     Opacity="0.3"
+                     Color="Gray" />
+
+            <Label Text="Shake-to-SOS"
+                   FontAttributes="Bold"
+                   TextColor="Gray" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <Label Text="Automatically send an SOS after three firm shakes"
+                       VerticalOptions="Center"
+                       LineBreakMode="WordWrap" />
+                <Switch x:Name="ShakeSosSwitch"
+                        Grid.Column="1"
+                        Toggled="OnShakeSosToggled"
+                        AutomationProperties.HelpText="Enable or disable shake-to-SOS" />
+            </Grid>
+            <Label x:Name="ShakeStatusLabel"
+                   Text="Disabled"
+                   FontSize="12"
+                   TextColor="Gray" />
+            <Label Text="Android can send automatically when SMS permission is granted. Keep trusted contacts current and test carefully."
+                   FontSize="12"
+                   TextColor="DarkRed"
+                   LineBreakMode="WordWrap" />
+
+            <Label x:Name="LiveLocationStatusLabel"
+                   Text="No active live-location session"
+                   FontSize="12"
+                   TextColor="Gray" />
+            <Button Text="Stop live-location sharing"
+                    Style="{StaticResource SecondaryButton}"
+                    Clicked="OnStopLiveLocationClicked" />
+
+            <BoxView HeightRequest="1"
+                     Opacity="0.3"
+                     Color="Gray" />
+
+            <!-- Logout -->
+            <Button Text="🚪 Log out"
+                    Style="{StaticResource SecondaryButton}"
+                    Clicked="OnLogoutClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

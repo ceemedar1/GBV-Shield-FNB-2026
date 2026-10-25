@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GBV_Shield.Features.Stories.StoriesPage"
+             Title="Community Stories">
+    <Grid RowDefinitions="Auto,Auto,*" Padding="14" RowSpacing="10">
+        <Border Padding="12" BackgroundColor="#FFF3E0" Stroke="#FFB74D" StrokeShape="RoundRectangle 12">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Survivor stories" FontSize="20" FontAttributes="Bold" TextColor="#5D4037" />
+                <Label Text="Stories are anonymous and unverified. They may discuss abuse. Do not use this page for emergencies or reports." FontSize="12" TextColor="#5D4037" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <Button Text="Share anonymously" Clicked="OnAddStoryClicked" BackgroundColor="#6A1B9A" TextColor="White" />
+            <Button Grid.Column="1" Text="Refresh" Clicked="OnRefreshClicked" />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <RefreshView x:Name="StoriesRefresh" Refreshing="OnRefreshing">
+                <CollectionView x:Name="StoriesCollection" SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="25" Spacing="8">
+                            <Label x:Name="EmptyMessage" Text="No community stories have been shared yet." HorizontalTextAlignment="Center" TextColor="#655F73" />
+                            <Button x:Name="RetryButton" Text="Try again" Clicked="OnRefreshClicked" IsVisible="False" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="12" Stroke="#D8D2E2" StrokeShape="RoundRectangle 12" BackgroundColor="White">
+                                <VerticalStackLayout Spacing="7">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="Anonymous survivor" FontAttributes="Bold" FontSize="15" TextColor="#4A148C" />
+                                        <Button Grid.Column="1" Text="Delete" FontSize="11" Padding="8,2"
+                                                IsVisible="{Binding IsOwner}" Clicked="OnDeleteStoryClicked"
+                                                CommandParameter="{Binding .}" BackgroundColor="Transparent" TextColor="#B71C1C" />
+                                    </Grid>
+                                    <Label Text="{Binding Content}" FontSize="14" TextColor="#212121" LineBreakMode="WordWrap" />
+                                    <Label Text="{Binding CreatedAt, StringFormat='{}{0:dd MMM yyyy}'}" FontSize="11" TextColor="#655F73" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+            <ActivityIndicator x:Name="LoadingIndicator" IsVisible="False" IsRunning="False" VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

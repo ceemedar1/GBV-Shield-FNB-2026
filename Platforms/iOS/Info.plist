@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<!-- 📱 App Identity -->
+		<key>CFBundleName</key>
+		<string>GBV Shield</string>
+		<key>CFBundleIdentifier</key>
+		<string>com.gbvshield.app</string>
+		<key>CFBundleVersion</key>
+		<string>1.0</string>
+		<key>CFBundleShortVersionString</key>
+		<string>1.0</string>
+
+		<!-- 🌙 Background Capabilities -->
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+			<string>processing</string>
+		</array>
+
+		<!-- 📍 Location Permissions -->
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>GBV Shield needs access to your location to send your position during SOS emergencies.</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>GBV Shield requires location access even when the app is closed to share your position in emergencies.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>GBV Shield requires continuous location access to send your SOS location when triggered by shaking.</string>
+
+		<!-- 📷 Camera & Media Access -->
+		<key>NSCameraUsageDescription</key>
+		<string>The app may use the camera for user reports or profile setup.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>GBV Shield may access your photos for uploading evidence or setting profile pictures.</string>
+
+		<!-- 🔔 Notifications -->
+		<key>NSUserNotificationUsageDescription</key>
+		<string>GBV Shield uses notifications to alert you and your contacts in case of emergencies.</string>
+
+		<!-- ☎️ Allow Call & SMS Links -->
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>tel</string>
+			<string>sms</string>
+		</array>
+
+		<!-- 🔒 Privacy Descriptions -->
+		<key>NSBluetoothAlwaysUsageDescription</key>
+		<string>GBV Shield may use Bluetooth to detect nearby safety devices.</string>
+		<key>NSMotionUsageDescription</key>
+		<string>Motion data is used to detect shake gestures for SOS activation.</string>
+
+		<!-- 💬 Speech / Microphone (optional, only if reporting uses voice) -->
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Microphone access is needed if you record voice reports or evidence.</string>
+
+	</dict>
+</plist>

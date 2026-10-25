@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GBV_Shield.Features.Stories.AddStoryPage"
+             Title="Share Anonymously">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="Share your story anonymously" FontSize="22" FontAttributes="Bold" TextColor="#4A148C" />
+
+            <Border Padding="12" BackgroundColor="#FFF3E0" Stroke="#FFB74D" StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Protect your privacy" FontAttributes="Bold" TextColor="#5D4037" />
+                    <Label Text="Do not include names, phone numbers, email addresses, links, exact locations, case numbers, workplaces, schools or details that could identify you or another person." FontSize="12" TextColor="#5D4037" />
+                    <Label Text="Stories become visible immediately to signed-in app users. This is not an emergency report or a private counsellor chat." FontSize="12" TextColor="#5D4037" />
+                    <Label Text="Stories are not moderated before posting. If you uninstall the app or clear its secure storage, you may lose the ability to delete a story you shared." FontSize="12" TextColor="#5D4037" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Editor x:Name="ContentEditor"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="220"
+                    MaxLength="2000"
+                    TextChanged="OnContentChanged"
+                    Placeholder="Write only what you feel safe sharing..." />
+            <Label x:Name="CharacterCount" Text="0 / 2000" HorizontalTextAlignment="End" FontSize="11" TextColor="#655F73" />
+
+            <HorizontalStackLayout Spacing="6">
+                <CheckBox x:Name="PrivacyCheck" />
+                <Label Text="I removed identifying information and understand this story will be shared anonymously." 
+                       VerticalOptions="Center" LineBreakMode="WordWrap" HorizontalOptions="FillAndExpand" />
+            </HorizontalStackLayout>
+
+            <Label x:Name="StatusLabel" TextColor="#B71C1C" FontSize="12" />
+            <ActivityIndicator x:Name="PostingIndicator" IsVisible="False" IsRunning="False" />
+            <Button x:Name="PostButton" Text="Share anonymous story" Clicked="OnPostStoryClicked"
+                    BackgroundColor="#6A1B9A" TextColor="White" />
+            <Button Text="Cancel" Clicked="OnCancelClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

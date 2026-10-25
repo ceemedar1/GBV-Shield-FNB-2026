@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>GBV Shield — Live location</title>
+  <style>
+    body{margin:0;font-family:system-ui,sans-serif;background:#f5f3ff;color:#19152b}main{max-width:760px;margin:auto;padding:18px}
+    .card{background:white;border-radius:16px;padding:18px;box-shadow:0 6px 24px #241b4d18}h1{font-size:1.35rem;margin:0 0 8px}
+    #map{width:100%;height:58vh;border:0;border-radius:12px;background:#ddd}#status{font-weight:650}.muted{color:#655f73;font-size:.9rem}
+    a{color:#4e32a8}.danger{color:#a21b2f}
+  </style>
+</head>
+<body><main><section class="card">
+  <h1>GBV Shield live location</h1>
+  <p id="status">Connecting securely…</p>
+  <p id="details" class="muted"></p>
+  <iframe id="map" title="Live OpenStreetMap location" hidden></iframe>
+  <p><a id="openMap" target="_blank" rel="noopener noreferrer" hidden>Open full map</a></p>
+</section></main>
+<script>
+const db='https://YOUR_PROJECT.firebaseio.com';
+const token=new URLSearchParams(location.search).get('s')||'';
+const statusEl=document.getElementById('status'),details=document.getElementById('details'),map=document.getElementById('map'),openMap=document.getElementById('openMap');
+const valid=/^[A-Za-z0-9_-]{43}$/.test(token);
+async function update(){
+  if(!valid){statusEl.textContent='Invalid tracking link';statusEl.className='danger';return;}
+  try{
+    const response=await fetch(`${db}/liveLocations/${encodeURIComponent(token)}.json`,{cache:'no-store',referrerPolicy:'no-referrer'});
+    if(!response.ok)throw new Error('Unavailable');
+    const data=await response.json();
+    if(!data||!data.active||data.expiresAt<=Date.now()){statusEl.textContent='This live-location session has ended.';statusEl.className='danger';map.hidden=true;openMap.hidden=true;return;}
+    if(!data.hasLocation){statusEl.textContent='Waiting for a GPS location…';return;}
+    const lat=Number(data.latitude),lon=Number(data.longitude),delta=.006;
+    map.src=`https://www.openstreetmap.org/export/embed.html?bbox=${lon-delta}%2C${lat-delta}%2C${lon+delta}%2C${lat+delta}&layer=mapnik&marker=${lat}%2C${lon}`;
+    map.hidden=false;openMap.hidden=false;openMap.href=`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`;
+    const age=Math.max(0,Math.round((Date.now()-Number(data.updatedAt))/1000));
+    if(!Number.isFinite(age)){statusEl.textContent='Location update time unavailable';statusEl.className='danger';return;}
+    statusEl.textContent=age>45?'Location updates paused — showing last known position':'Live location active';
+    statusEl.className=age>45?'danger':'';
+    details.textContent=`Updated ${age} seconds ago${data.accuracy?` • accuracy about ${Math.round(data.accuracy)} m`:''}`;
+  }catch{statusEl.textContent='Location temporarily unavailable. Retrying…';statusEl.className='danger';}
+}
+update();setInterval(update,5000);
+</script></body></html>
